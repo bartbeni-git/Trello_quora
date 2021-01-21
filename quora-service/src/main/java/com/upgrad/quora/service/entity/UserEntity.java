@@ -17,7 +17,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
-@Table(name = "users", schema = "quora")
+@Table(name = "users")
 @NamedQueries(
     {
         @NamedQuery(name = "userByUuid", query = "select u from UserEntity u where u.uuid = :uuid"),
@@ -42,7 +42,7 @@ public class UserEntity implements Serializable {
   @Size(max = 50)
   private String email;
 
-  @Column(name = "userName")
+  @Column(name = "username")
   @NotNull
   @Size(max = 30)
   private String userName;
@@ -73,7 +73,7 @@ public class UserEntity implements Serializable {
   @Size(max = 30)
   private String country;
 
-  @Column(name = "aboutMe")
+  @Column(name = "aboutme")
   @Size(max = 30)
   private String aboutMe;
 

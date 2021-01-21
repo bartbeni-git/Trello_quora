@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Import;
  * A Configuration class that can declare one or more @Bean methods and trigger auto-configuration and component scanning.
  * This class launches a Spring Application from Java main method.
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={
+    "com.upgrad.quora.service.business"})
 @Import(ServiceConfiguration.class)
 public class QuoraApiApplication {
     public static void main(String[] args) {

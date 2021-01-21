@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user")
 public class SignUpController {
   @Autowired
   private SignupBusinessService signupBusinessService;

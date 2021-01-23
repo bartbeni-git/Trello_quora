@@ -21,7 +21,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @NamedQueries(
     {
         @NamedQuery(name = "userByUuid", query = "select u from UserEntity u where u.uuid = :uuid"),
-        @NamedQuery(name = "userByEmail", query = "select u from UserEntity u where u.email =:email")
+        @NamedQuery(name = "userByEmail", query = "select u from UserEntity u where u.email =:email"),
+        @NamedQuery(name = "userByUserName", query = "select u from UserEntity u where u.userName=:userName")
     }
 )
 
@@ -88,8 +89,8 @@ public class UserEntity implements Serializable {
   @Column(name = "salt")
   @NotNull
   @Size(max = 200)
+  //@ToStringExclude
   private String salt;
-
 
   @Override
   public boolean equals(Object obj) {

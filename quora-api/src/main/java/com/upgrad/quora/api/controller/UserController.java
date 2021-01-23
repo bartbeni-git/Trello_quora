@@ -23,7 +23,7 @@ import java.util.Base64;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user")
 public class UserController {
   @Autowired
   private SignupBusinessService signupBusinessService;

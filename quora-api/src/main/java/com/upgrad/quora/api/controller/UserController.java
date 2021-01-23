@@ -79,6 +79,5 @@ public class UserController {
     UserEntity userEntity = userAuthService.signout(accessToken);
     SignoutResponse signoutResponse = new SignoutResponse().id(userEntity.getUuid()).message("SIGNED OUT SUCCESSFULLY");
     return new ResponseEntity<SignoutResponse>(signoutResponse, HttpStatus.OK);
-
   }
 }

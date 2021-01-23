@@ -8,6 +8,7 @@ import com.upgrad.quora.service.business.UserAuthenticationService;
 import com.upgrad.quora.service.entity.UserAuthEntity;
 import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.AuthenticationFailedException;
+import com.upgrad.quora.service.exception.SignUpRestrictedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class UserController {
   private UserAuthenticationService userAuthService;
 
   @RequestMapping(method = RequestMethod.POST, path = "/signup", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<SignupUserResponse> signup(final SignupUserRequest signupUserRequest) {
+  public ResponseEntity<SignupUserResponse> signup(final SignupUserRequest signupUserRequest) throws SignUpRestrictedException {
     final UserEntity userEntity = new UserEntity();
     userEntity.setUuid(UUID.randomUUID().toString());
     userEntity.setFirstName(signupUserRequest.getFirstName());
@@ -39,7 +40,6 @@ public class UserController {
     userEntity.setEmail(signupUserRequest.getEmailAddress());
     userEntity.setPassword(signupUserRequest.getPassword());
     userEntity.setContactNumber(signupUserRequest.getContactNumber());
-    userEntity.setSalt("1234abc");
     userEntity.setAboutMe(signupUserRequest.getAboutMe());
     userEntity.setCountry(signupUserRequest.getCountry());
     userEntity.setDob(signupUserRequest.getDob());
@@ -49,8 +49,10 @@ public class UserController {
 
 
     final UserEntity createdUserEntity = signupBusinessService.signup(userEntity);
-    SignupUserResponse userResponse = new SignupUserResponse().id(createdUserEntity.getUuid()).status("REGISTERED");
-    return new ResponseEntity<SignupUserResponse>(userResponse, HttpStatus.CREATED);
+    SignupUserResponse signupUserResponse = new SignupUserResponse();
+    signupUserResponse.setId(createdUserEntity.getUuid());
+    signupUserResponse.setStatus("USER SUCCESSFULLY REGISTERED");
+    return new ResponseEntity<SignupUserResponse>(signupUserResponse, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.POST, path = "/user/signin", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

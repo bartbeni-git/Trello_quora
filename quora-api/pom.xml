@@ -75,7 +75,6 @@
             </plugins>
         </pluginManagement>
 
-
         <plugins>
             <plugin>
                 <groupId>io.swagger</groupId>

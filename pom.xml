@@ -46,10 +46,7 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.2</version>
         </dependency>
-<<<<<<< HEAD
 
-=======
->>>>>>> e02088c167b6b64ba115656e5ac1836175ade695
     </dependencies>
 
     <parent>

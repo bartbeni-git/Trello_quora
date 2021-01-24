@@ -63,5 +63,4 @@ public class UserAuthenticationService {
         userAuthDao.updateUserAuth(userAuthEntity);
         return userAuthEntity.getUserEntity();
     }
-
 }

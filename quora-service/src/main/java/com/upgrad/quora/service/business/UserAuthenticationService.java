@@ -53,6 +53,7 @@ public class UserAuthenticationService {
 
         return userAuthEntity;
     }
+
     @Transactional(propagation = Propagation.REQUIRED)
     public UserEntity signout(final String accessToken) throws SignOutRestrictedException {
         UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
@@ -63,4 +64,6 @@ public class UserAuthenticationService {
         userAuthDao.updateUserAuth(userAuthEntity);
         return userAuthEntity.getUserEntity();
     }
+
+
 }

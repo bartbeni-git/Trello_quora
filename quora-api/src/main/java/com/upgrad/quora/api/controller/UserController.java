@@ -49,6 +49,7 @@ public class UserController {
     userEntity.setUserName(signupUserRequest.getUserName());
 
 
+
     final UserEntity createdUserEntity = signupBusinessService.signup(userEntity);
     SignupUserResponse signupUserResponse = new SignupUserResponse();
     signupUserResponse.setId(createdUserEntity.getUuid());
@@ -62,7 +63,7 @@ public class UserController {
     byte[] decode = Base64.getDecoder().decode(authorization);
 
     String decodedText = new String(decode);
-    decodedText = decodedText.split("Basic ")[1];
+    decodedText=decodedText.split("Basic ")[1];
     String[] decodedArray = decodedText.split(":");
     UserAuthEntity userAuthEntity = userAuthService.signin(decodedArray[0], decodedArray[1]);
 
@@ -75,7 +76,6 @@ public class UserController {
 
     return new ResponseEntity<SigninResponse>(signinResponse, headers, HttpStatus.OK);
   }
-
   @RequestMapping(method = RequestMethod.POST, path = "/user/signout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<SignoutResponse> signout(@RequestHeader("authorization") final String accessToken) throws SignOutRestrictedException {
     UserEntity userEntity = userAuthService.signout(accessToken);
@@ -83,4 +83,5 @@ public class UserController {
     return new ResponseEntity<SignoutResponse>(signoutResponse, HttpStatus.OK);
 
   }
+
 }

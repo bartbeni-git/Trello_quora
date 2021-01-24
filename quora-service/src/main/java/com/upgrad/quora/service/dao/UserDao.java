@@ -12,7 +12,6 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class UserDao {
   @PersistenceContext
-  //@Autowired
   private EntityManager entityManager;
 
   /**
@@ -44,7 +43,7 @@ public class UserDao {
    * @param userName username of the user whose information is to be fetched.
    * @return null if the user with given username doesn't exist in DB.
    */
-  public UserEntity getUserByUserName(String userName) {
+  public UserEntity getUserByUserName(final String userName) {
     try {
       return entityManager.createNamedQuery("userByUserName", UserEntity.class).setParameter("userName", userName).getSingleResult();
     } catch (NoResultException nre) {

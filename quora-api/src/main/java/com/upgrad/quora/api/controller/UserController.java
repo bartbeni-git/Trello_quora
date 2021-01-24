@@ -57,7 +57,7 @@ public class UserController {
     return new ResponseEntity<SignupUserResponse>(signupUserResponse, HttpStatus.CREATED);
   }
 
-  @RequestMapping(method = RequestMethod.POST, path = "/user/signin", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @RequestMapping(method = RequestMethod.POST, path = "/signin", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<SigninResponse> signin(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException {
 
     byte[] decode = Base64.getDecoder().decode(authorization);
@@ -76,7 +76,7 @@ public class UserController {
 
     return new ResponseEntity<SigninResponse>(signinResponse, headers, HttpStatus.OK);
   }
-  @RequestMapping(method = RequestMethod.POST, path = "/user/signout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @RequestMapping(method = RequestMethod.POST, path = "/signout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<SignoutResponse> signout(@RequestHeader("authorization") final String accessToken) throws SignOutRestrictedException {
     UserEntity userEntity = userAuthService.signout(accessToken);
     SignoutResponse signoutResponse = new SignoutResponse().id(userEntity.getUuid()).message("SIGNED OUT SUCCESSFULLY");

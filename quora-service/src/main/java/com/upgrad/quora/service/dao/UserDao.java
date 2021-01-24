@@ -1,5 +1,6 @@
 package com.upgrad.quora.service.dao;
 
+import com.upgrad.quora.service.exception.SignUpRestrictedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.upgrad.quora.service.entity.UserEntity;
@@ -14,13 +15,27 @@ public class UserDao {
   //@Autowired
   private EntityManager entityManager;
 
-  public UserEntity createUser(UserEntity userEntity) {
+  /**
+   * Persists user entity
+   * @param userEntity object to be persisted
+   * @return passed down user entity
+   */
+  public UserEntity createUser(UserEntity userEntity){
     entityManager.persist(userEntity);
     return userEntity;
   }
 
+  /**
+   * Get user entity from id
+   * @param userUuid id of the user
+   * @return nullable entity of user type
+   */
   public UserEntity getUser(final String userUuid) {
-    return entityManager.createNamedQuery("userByUuid", UserEntity.class).setParameter("uuid", userUuid).getSingleResult();
+    try {
+      return entityManager.createNamedQuery("userByUuid", UserEntity.class).setParameter("uuid", userUuid).getSingleResult();
+    } catch (NoResultException nre) {
+      return null;
+    }
   }
 
   /**
@@ -37,7 +52,21 @@ public class UserDao {
     }
   }
 
+  /**
+   *
+   */
+  public UserEntity getUserByEmailId(final String email) {
+    try {
+      return entityManager.createNamedQuery("userByEmail", UserEntity.class).setParameter("email", email).getSingleResult();
+    } catch (NoResultException nre) {
+      return null;
+    }
+  }
 
+  /**
+   * Updates the user entity
+   * @param updatedUserEntity
+   */
   public void updateUserEntity(final UserEntity updatedUserEntity) {
     entityManager.merge(updatedUserEntity);
   }

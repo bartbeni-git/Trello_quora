@@ -1,7 +1,10 @@
 package com.upgrad.quora.api.controller;
 
+import com.upgrad.quora.api.model.AnswerResponse;
 import com.upgrad.quora.api.model.QuestionDeleteResponse;
 import com.upgrad.quora.api.model.QuestionDetailsResponse;
+import com.upgrad.quora.api.model.QuestionEditRequest;
+import com.upgrad.quora.api.model.QuestionEditResponse;
 import com.upgrad.quora.api.model.QuestionRequest;
 import com.upgrad.quora.api.model.QuestionResponse;
 import com.upgrad.quora.service.business.QuestionBusinessService;
@@ -74,11 +77,14 @@ public class QuestionController {
   }
 
   @RequestMapping(method = RequestMethod.PUT, path = "edit/{questionId}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<QuestionResponse> edit(final QuestionRequest questionRequest, @RequestHeader(value = "authorization", required = false) final String authorization) throws AuthorizationFailedException {
-
-    final QuestionResponse questionResponse = new QuestionResponse();
-    questionResponse.setId(null);
-    return new ResponseEntity<QuestionResponse>(questionResponse, HttpStatus.CREATED);
+  public ResponseEntity<QuestionEditResponse> edit(@RequestHeader(value = "authorization", required = false) final String authorization,
+      @PathVariable("questionId") final String questionId, QuestionEditRequest questionEditRequest)
+      throws AuthorizationFailedException, InvalidQuestionException {
+    QuestionEntity updatedQuestionEntity = questionBusinessService.updateQuestionEntity(authorization, questionId, questionEditRequest.getContent());
+    QuestionEditResponse questionEditResponse = new QuestionEditResponse();
+    questionEditResponse.setId(updatedQuestionEntity.getUuid());
+    questionEditResponse.setStatus("QUESTION EDITED");
+    return new ResponseEntity<QuestionEditResponse>(questionEditResponse, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, path = "delete/{questionId}",  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

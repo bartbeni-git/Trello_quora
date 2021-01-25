@@ -16,7 +16,6 @@ public class QuestionDao {
   @PersistenceContext
   private EntityManager entityManager;
 
-  @Transactional(propagation = Propagation.REQUIRED)
   public QuestionEntity createQuestion(QuestionEntity questionEntity) {
     entityManager.persist(questionEntity);
     return questionEntity;
@@ -46,9 +45,9 @@ public class QuestionDao {
     }
   }
 
-  @Transactional
-  @Modifying
   public void deleteQuestion(String questionUuid) {
       entityManager.createNamedQuery("deleteQuestionById").setParameter("uuid", questionUuid).executeUpdate();
   }
+
+  public void updateQuestion(QuestionEntity questionEntity) {entityManager.merge(questionEntity);}
 }
